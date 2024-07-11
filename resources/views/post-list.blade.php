@@ -7,10 +7,11 @@
     <hr>
     @foreach ($posts as $post)
         <div>
-            <a href="#">
+            <a href="{{ route('post.detail', $post->id) }}">
                 <h2>{{ $post->title }}</h2>
             </a>
             <p>{{ $post->description }}</p>
+            <p>Lượt xem: {{ $post->view }}</p>
         </div>
     @endforeach
 @endsection

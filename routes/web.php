@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 Route::view('/about-us', 'about')->name('page.about');
 //Đường dẫn có tham số
@@ -73,3 +73,27 @@ Route::get('/post-list', function () {
     $posts = DB::table('posts')->get();
     return view('post-list', compact('posts'));
 });
+
+Route::get('/', function () {
+    $posts = DB::table('posts')
+        ->orderBy('view', 'desc')
+        ->limit(8)
+        ->get();
+    return view('post-list', compact('posts'));
+});
+
+//Hiển bài viết theo danh mục
+Route::get('/category/{id}', function ($id) {
+    $posts = DB::table('posts')
+        ->where('cate_id', '=', $id)
+        ->get();
+    return view('post-list', compact('posts'));
+});
+
+//Hiển thị chi tiết bài viết
+Route::get('/post/{id}', function ($id) {
+    $post = DB::table('posts')
+        ->where('id', $id)
+        ->first();
+    return $post;
+})->name('post.detail');
