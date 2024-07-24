@@ -19,6 +19,11 @@
                 <th scope="col">Description</th>
                 <th scope="col">View</th>
                 <th scope="col">Cate Name</th>
+                <th scope="col">
+                    <a href="{{ route('post.create') }}" class="btn btn-primary">
+                        Create new
+                    </a>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -27,11 +32,19 @@
                     <th scope="row">{{ $post->id }}</th>
                     <td>{{ $post->title }}</td>
                     <td>
-                        <img src="{{ $post->image }}" width="50" alt="">
+                        <img src="{{ asset('/storage/' . $post->image) }}" width="50" alt="">
                     </td>
                     <td>{{ $post->description }}</td>
                     <td>{{ $post->view }}</td>
-                    <td>{{ $post->cate_id }}</td>
+                    <td>{{ $post->category->name }}</td>
+                    <td class="d-flex gap-1">
+                        <a href="{{ route('post.edit', $post) }}" class="btn btn-primary">Edit</a>
+                        <form action="{{ route('post.destroy', $post) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
