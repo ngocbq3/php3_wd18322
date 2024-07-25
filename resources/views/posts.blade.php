@@ -10,6 +10,13 @@
 
 <body>
     <h1>Danh sách bài viết</h1>
+
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+
     <table class="table">
         <thead>
             <tr>
@@ -42,7 +49,8 @@
                         <form action="{{ route('post.destroy', $post) }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button onclick="return confirm('Bạn có muốn xóa không?')" type="submit"
+                                class="btn btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>
