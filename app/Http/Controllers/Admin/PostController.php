@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -52,12 +53,15 @@ class PostController extends Controller
         // Post::query()->find(102)->update([
         //     'title' => 'Update post'
         // ]);
+
+
         Post::query()->find(101)->delete();
         $posts = Post::orderByDesc('id')->get();
         return $posts;
     }
     public function index()
     {
+        // dd(Auth::user());
         $posts = Post::paginate(10);
         return view('posts', compact('posts'));
     }
