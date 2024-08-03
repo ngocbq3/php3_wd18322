@@ -14,11 +14,21 @@
         <h1>Create new Post</h1>
         <a href="{{ route('post.index') }}" class="btn btn-primary">List post</a>
 
+        @if ($errors->any())
+            <div class="alert alert-danger mt-3">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label class="form-label">Title</label>
-                <input type="text" class="form-control" name="title">
+                <input type="text" class="form-control" name="title" value="{{ old('title') }}">
             </div>
             <div class="mb-3">
                 <label for="formFile" class="form-label">image</label>
@@ -26,21 +36,21 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Description</label>
-                <textarea class="form-control" name="description" rows="3"></textarea>
+                <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label">Content</label>
-                <textarea class="form-control" name="content" rows="6"></textarea>
+                <textarea class="form-control" name="content" rows="6">{{ old('content') }}</textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label">View</label>
-                <input type="number" name="view" class="form-control">
+                <input type="number" name="view" class="form-control" value="{{ old('view') }}">
             </div>
             <div class="mb-3">
                 <label class="form-label">Category</label>
                 <select name="cate_id" id="" class="form-select">
                     @foreach ($categories as $cate)
-                        <option value="{{ $cate->id }}">
+                        <option value="{{ $cate->id }}" @selected($cate->id == old('cate_id'))>
                             {{ $cate->name }}
                         </option>
                     @endforeach
